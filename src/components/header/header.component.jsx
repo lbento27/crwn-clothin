@@ -8,7 +8,10 @@ import "./header.styles.scss";
 
 import { connect } from "react-redux";
 
-const Header = ({ currentUser }) => {
+import CartIcon from "../cart-icon/cart-icon.component";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+
+const Header = ({ currentUser, hidden }) => {
   return (
     <div className="header">
       <Link to="/" className="logo-container">
@@ -31,13 +34,21 @@ const Header = ({ currentUser }) => {
             SIGN IN
           </Link>
         )}
+        <CartIcon />
       </div>
+      {hidden ? null : <CartDropdown />}
     </div>
   );
 };
+//old
+// const mapStateToProps = state => ({
+//   currentUser: state.user.currentUser
+// });
 
-const mapStateToProps = state => ({
-  currentUser: state.user.currentUser
+//destructuring nested values, {user: {currentUser}}--- destruct from state-user and from user-currentUser
+const mapStateToProps = ({ user: { currentUser }, cart: { hidden } }) => ({
+  currentUser,
+  hidden
 });
 
 export default connect(mapStateToProps)(Header);
