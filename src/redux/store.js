@@ -3,10 +3,15 @@ import logger from "redux-logger"; //middleware useful for debugging
 
 import rootReducer from "./root-reducer";
 
+import { persistStore } from "redux-persist";
+
 //setup middlewares
 const middlewares = [logger];
 
 //Store
-const store = createStore(rootReducer, applyMiddleware(...middlewares));
+export const store = createStore(rootReducer, applyMiddleware(...middlewares));
 
-export default store;
+//version os store but persisted
+export const persistor = persistStore(store);
+
+export default { store, persistor };
